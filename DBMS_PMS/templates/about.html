@@ -1,0 +1,65 @@
+{% extends "layout.html" %}
+
+{% load static %}
+
+{% block title %}
+    About Us
+{% endblock %}
+
+{% block stylehead %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+   <link rel="stylesheet" href="{% static 'css/about.css' %}">
+        
+{% endblock %}
+
+{% block content %}
+    <section id="about-us" class="text-center">
+        <div class="bg-image">
+            <div class="overlay">
+                <h1 class="heading">About Us</h1>
+                <h3 class="heading">Your Trusted Partner in Property Excellence</h3>
+            </div>
+        </div>
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <i class="bi bi-star-fill icon"></i>
+                            <h3 class="card-title">Our Mission</h3>
+                            <p class="card-text">Our mission is to revolutionize property management by delivering exceptional service and innovative solutions. We strive to enhance the value of every property we manage, ensuring the satisfaction of owners and tenants alike.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <i class="bi bi-graph-up icon"></i>
+                            <h3 class="card-title">Our Story</h3>
+                            <p class="card-text">Founded with a passion for real estate and a commitment to excellence, our journey. Over the years, we have grown from a small team into a leading property management firm, trusted by clients for our expertise.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <i class="bi bi-lightbulb icon"></i>
+                            <h3 class="card-title">Our Values</h3>
+                            <p class="card-text">Integrity, transparency, and customer satisfaction are the cornerstones of our business. We believe in building long-term relationships based on trust. Our values guide every decision we make, ensuring that we provide best services.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <i class="bi bi-people icon"></i>
+                            <h3 class="card-title">Our Team</h3>
+                            <p class="card-text">Our team is composed of experienced professionals who are passionate about property management. With diverse backgrounds and expertise, we work collaboratively to deliver outstanding results for our clients.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

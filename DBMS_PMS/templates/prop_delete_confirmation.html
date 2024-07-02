@@ -1,0 +1,19 @@
+{% comment %} 2 navbars {% endcomment %}
+
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>confirmation</title>
+</head>
+<body>
+    <h2>confirm your action.</h2>
+    <form  method="post">
+        {% csrf_token %}
+        <button>Delete</button>
+        <a href="{% url 'user_properties'%}">cancel</a>
+
+    </form>
+</body>
+</html>

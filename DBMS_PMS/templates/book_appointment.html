@@ -1,0 +1,29 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>appointment</title>
+</head>
+<body>
+    <h2>Book an Appointment</h2>
+  {% if messages %}
+    {% for message in messages %}
+      <p style="color: red;">{{ message }}</p>
+    {% endfor %}
+  {% endif %}
+  <form method="POST" action="{% url 'book_appointment' property.id %}">
+    {% csrf_token %}
+    <label for="appointment_date_and_time">Appointment Date and Time:</label>
+    <input type="datetime-local" id="appointment_date_and_time" name="appointment_date_and_time" required><br><br>
+
+    <input type="hidden" id="visiting_user" name="visiting_user" value="{{ request.user.id }}">
+    <input type="hidden" id="propID" name="propID" value="{{ property.id }}">
+    <input type="hidden" id="userID" name="userID" value="{{ property.user.id }}">
+
+    <button type="submit">Book Appointment</button>
+  </form>
+</body>
+</html>

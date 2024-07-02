@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APPOINTMENTS</title>
+</head>
+<body>
+
+  <h2>Appointments for Your Property</h2>
+  <div>
+    {% if appointments_for_user_properties %}
+      <table>
+        <thead>
+          <tr>
+            <th>Visitor Name</th>
+            <th>Phone Number</th>
+            <th>Email</th>
+            <th>Property Address</th>
+            <th>Appointment Date and Time</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for appointment in appointments_for_user_properties %}
+            <tr>
+              <td>{{ appointment.visiting_user.get_full_name }}</td>
+              <td>{{ appointment.visiting_user.phone_number }}</td>
+              <td>{{ appointment.visiting_user.email }}</td>
+              <td>{{ appointment.propID.address }}</td>
+              <td>{{ appointment.appointment_date_and_time }}</td>
+              <td><a href="{% url 'property_detail' appointment.propID.id %}">View Property</a>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>No appointments for your properties.</p>
+    {% endif %}
+  </div>
+
+  <h2>Your Appointments</h2>
+  <div>
+    {% if appointments_booked_by_user %}
+      <table>
+        <thead>
+          <tr>
+            <th>Property Owner Name</th>
+            <th>Phone Number</th>
+            <th>Email</th>
+            <th>Property Address</th>
+            <th>Appointment Date and Time</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for appointment in appointments_booked_by_user %}
+            <tr>
+              <td>{{ appointment.userID.get_full_name }}</td>
+              <td>{{ appointment.userID.phone_number }}</td>
+              <td>{{ appointment.userID.email }}</td>
+              <td>{{ appointment.propID.address }}</td>
+              <td>{{ appointment.appointment_date_and_time }}</td>
+              <td><a href="{% url 'property_detail' appointment.propID.id %}">View Property</a></td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>You have not booked any appointments.</p>
+    {% endif %}
+  </div>
+
+</body>
+</html>

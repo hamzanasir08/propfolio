@@ -1,0 +1,32 @@
+{% comment %}  property list page will be redirected to this page to display description. {% endcomment %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Property Details</title>
+</head>
+<body>
+    <h1>Property Details</h1>
+    <h2>{{ property.address }}</h2>
+    <p><strong>Facing:</strong> {{ property.facing }}</p>
+    <p><strong>Price:</strong> {{ property.price }}</p>
+    <p><strong>Bedrooms:</strong> {{ property.number_of_bedrooms }}</p>
+    <p><strong>Bathrooms:</strong> {{ property.number_of_bathrooms }}</p>
+    <p><strong>Sale Type:</strong> {{ property.sale_type }}</p>
+    <p><strong>City:</strong> {{ property.city.city_name }}</p>
+    <p><strong>Town:</strong> {{ property.town.town_name }}</p>
+    <p><strong>Description:</strong> {{ property.description }}</p>
+    <p><strong>Posted on:</strong> {{ property.posted_on }}</p>
+    <p><strong>Posted by:</strong> {{ property.user.first_name }} {{ property.user.last_name }}</p>
+    <div>
+        <h3>Images:</h3>
+        <ul>
+            {% for image in property.images.all %}
+            <li><img src="{{ image.images.url }}" alt="Property Image" width="200"></li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% if user != property.user and user.is_authenticated %}
+        <a href="{% url 'book_appointment' property.id%}">Book an Appointment</a>
+    {% endif %}
+</body>
+</html>

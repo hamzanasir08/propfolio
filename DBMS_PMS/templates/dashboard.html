@@ -1,0 +1,22 @@
+{% comment %} this should have the main nav bar with dashboard selected {% endcomment %}
+{% comment %} it should have another navbar after main navbar (i am naming it as dashboard navbar) which will have: My Properties, Post an add, appointments {% endcomment %}
+{% comment %} if any option from dashboard navbar is selected, it will redirect to another page but that page must have above 2 navbars. {% endcomment %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+</head>
+<body>
+    <ul>
+        {% if user.is_authenticated %}
+        <p>Welcome, {{ user.first_name }} {{ user.last_name }}!</p>
+        {% endif %}
+        <li><a href="{% url 'user_properties'%}">My posting</a></li>
+        <li><a href="{%url 'view_appointments' %}">APPOINTMENTS</a></li>
+        <li><a href="{% url 'submit_property' %}">post a prop</a></li>
+        <a href="{% url 'logout' %}">Logout</a>
+    </ul>
+</body>
+</html>
