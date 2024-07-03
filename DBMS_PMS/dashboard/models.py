@@ -19,7 +19,6 @@ class Town(models.Model):
         return self.town_name
 
 
-
 class Image(models.Model):
     imageID = models.AutoField(primary_key=True)
     images = models.ImageField(upload_to='property_images/')  # You can specify the upload directory
@@ -27,6 +26,7 @@ class Image(models.Model):
 class Property(models.Model):
     posted_on = models.DateTimeField(auto_now_add=True)  # Automatically set the field to now when the object is first created
     facing = models.CharField(max_length=50)
+    prop_type = models.CharField(max_length=50, null=True)
     address = models.CharField(max_length=255)
     city = models.ForeignKey(City, on_delete=models.CASCADE)
     town = models.ForeignKey(Town, on_delete=models.CASCADE)

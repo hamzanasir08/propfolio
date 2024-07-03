@@ -18,6 +18,13 @@
           <option value="south" {% if prop.facing == 'south' %}selected{% endif %}>South</option>
         </select>
 
+        <label for="prop_type">Property Type:</label>
+        <select name="prop_type" id="prop_type">
+          <option value="Plot" {% if prop.prop_type == 'Plot'%}selected{% endif %}>Plot</option>
+          <option value="House" {% if prop.prop_type == 'House'%}selected{% endif %}>House</option>
+          <option value="Appartment" {% if prop.prop_type == 'Appartment'%}selected{% endif %}>Appartment</option>
+        </select>
+
         <label for="price">Price in PKR:</label>
         <input type="number" name="price" id="price" value="{{ prop.price }}" required>
 

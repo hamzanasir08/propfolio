@@ -39,6 +39,7 @@ def submit_property(request):
         city_id = request.POST['city']
         town_id = request.POST['town']
         description = request.POST['description']
+        prop_type = request.POST['prop_type']
         
         city = City.objects.get(pk=city_id)
         town = Town.objects.get(pk=town_id)
@@ -54,7 +55,8 @@ def submit_property(request):
             city=city,
             town=town,
             user=user,
-            description=description
+            description=description,
+            prop_type = prop_type
         )
 
         for image in request.FILES.getlist('images'):
@@ -77,8 +79,16 @@ def get_towns(request):
 def property_list(request):
     if request.method == 'POST':
         filtered_cityID = request.POST.get('city')
-        properties = Property.objects.filter(city_id = filtered_cityID)
-        return render(request,'property_list.html',{'properties': properties})
+        prop_type = request.POST.get('prop_type')
+        filters = {}
+        if filtered_cityID:
+            filters['city_id'] = filtered_cityID
+        if prop_type:
+            filters['prop_type'] = prop_type
+        
+        properties = Property.objects.all()
+        filtered_properties = properties.filter(**filters)
+        return render(request,'property_list.html',{'properties': filtered_properties})
     properties = Property.objects.all().order_by('-posted_on')[:9]
     cities = City.objects.all()
     return render(request, 'property_list.html', {'properties': properties, 'cities': cities , 'show_dropdown': True})
@@ -93,7 +103,43 @@ def property_detail(request, property_id):
 
 def search(request):
     cities = City.objects.all()
-    return render(request,'search.html',{'search':True, 'cities': cities})
+    properties = Property.objects.all()
+
+    if request.method == "POST":
+        facing = request.POST.get('facing')
+        price = request.POST.get('price')
+        bedrooms = request.POST.get('bedrooms')
+        bathrooms = request.POST.get('bathrooms')
+        sale_type = request.POST.get('sale_type')
+        city_id = request.POST.get('city')
+        town_id = request.POST.get('town')
+        prop_type = request.POST.get('prop_type')
+
+        # Build a dictionary for filters
+        filters = {}
+        if facing:
+            filters['facing'] = facing
+        if price:
+            filters['price__lte'] = price
+        if bedrooms:
+            filters['number_of_bedrooms'] = bedrooms
+        if bathrooms:
+            filters['number_of_bathrooms'] = bathrooms
+        if sale_type:
+            filters['sale_type'] = sale_type
+        if city_id:
+            filters['cityID'] = city_id
+        if town_id:
+            filters['townID'] = town_id
+        if prop_type:
+            filters['prop_type'] = prop_type
+
+
+        # Apply filters
+        properties = properties.filter(**filters)
+        return render(request,'property_list.html', {'properties': properties})
+
+    return render(request, 'search.html', {'cities': cities, 'search': True, 'properties': properties})
 
 
 # it will display properties listed by logined user
@@ -126,6 +172,7 @@ def edit_property(request, prop_id):
         prop.city = City.objects.get(pk=request.POST['city'])
         prop.town = Town.objects.get(pk=request.POST['town'])
         prop.description = request.POST['description']
+        prop.prop_type = request.POST['prop_type']
 
         # Handle images
         if 'images' in request.FILES:
@@ -143,18 +190,9 @@ def edit_property(request, prop_id):
     context = {
         'prop': prop,
         'cities': cities,
-        'towns': towns
+        'towns': towns,
     }
     return render(request, 'edit_property.html', context)
-
-
-
-
-
-
-
-
-
 
 
 
@@ -197,8 +235,6 @@ def book_appointment(request, property_id):
 @login_required
 def appointment_success(request):
     return render(request, 'appointment_success.html')
-
-
 
 
 @login_required
