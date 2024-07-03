@@ -7,8 +7,8 @@ def home(request):
 
 def signup(request):
   if request.method == 'POST':
-    first_name = request.POST.get('fname')
-    last_name = request.POST.get('lname')
+    first_name = request.POST.get('firstname')
+    last_name = request.POST.get('lastname')
     email = request.POST.get('email')
     password = request.POST.get('password')
     phone_number = request.POST.get('phone')
@@ -34,7 +34,7 @@ def signup(request):
       # Handle user creation error (e.g., display message)
       print('User creation failed. Please try again.')
 
-  return render(request, 'signup.html')
+  return render(request, 'registration/checkregister.html')
 
 
 
@@ -53,4 +53,4 @@ def logined(request):
       # Handle unsuccessful login attempt (e.g., display error message)
       print('Invalid login credentials. Please try again.')
 
-  return render(request, 'login.html')
+  return render(request, 'registration/checklogin.html')

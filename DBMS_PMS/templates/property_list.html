@@ -1,97 +1,51 @@
-{% extends "home.html" %}
-{% load static %}
-
-{% comment %} {% comment %} {% extends "home.html" %}
-{% comment %} {% extends "layout.html" %} {% endcomment %}
-
-{% comment %} this page will list props in the form of cards, on clicking show description button, it will redirect to another page which will show complete description of the respective property  {% endcomment %}
-{% comment %} dessign property card according to the following fields. {% endcomment %}
-{% comment %} this page will be our home page which will be accessed by logined and unlogined users. {% endcomment %}
-
-
-{% comment %} Bilal {% endcomment %}
-
-{% comment %}
-{% block title %}Home{% endblock title %}
-{% block propcard %}
-    {% if user.is_authenticated %}
-    <a href="{% url 'dashboard_view'%}">go to dashboard</a>
-    {% else %}
-    <a href="{%url "logined"%}">login</a>
-    <a href="{%url "signup"%}">signup</a>
+{% extends "layout.html" %}
+{% block content %}
+<div>
+    {% comment %} dropdown for filter {% endcomment %}
+    {% if show_dropdown %}
+    <form  method="post">
+        {% csrf_token %}
+        <label for="city">City:</label>
+        <select id="city" name="city">
+            <option value="">Select a city</option>
+            {% for city in cities %}
+                <option value="{{ city.cityID }}">{{ city.city_name }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit" class='btn btn-success'>Filter</button>
+    </form>
     {% endif %}
-    <h1>Property List</h1>
-    <ul>
-        {% for property in properties %}
-        <li>
-            <h2>{{ property.address }}</h2>
+
+    {% comment %} property cards {% endcomment %}
+    {% if properties %}
+    {% for property in properties %}
+    <div class="card" style="width: 18rem;">
+        {% if property.images.all %}
+        <img src="{{ property.images.all.0.images.url }}" alt="Property Image" class="card-img-top">
+        {% endif %}
+        <div class="card-body">
+          <h5 class="card-title">{{ property.address }}</h5>
+          <p class="card-text">
             <p><strong>Price:</strong> {{ property.price }}</p>
             <p><strong>City:</strong> {{ property.city.city_name }}</p>
             <p><strong>Town:</strong> {{ property.town.town_name }}</p>
-            <div>
-                <h3>Image:</h3>
-                {% if property.images.all %}
-                <img src="{{ property.images.all.0.images.url }}" alt="Property Image" width="200">
-                {% endif %}
-            </div>
-            <a href="{% url 'property_detail' property.id %}">Show Description</a>
-            {% if user == property.user %}
-                <a href="{% url 'edit_property' property.id %}">Edit</a>
-                <a href="{% url 'prop_delete' property.id %}">Delete</a>
-            {% endif %}
-        </li>
-        {% endfor %}
-    </ul>
-{% endblock propcard %} {% endcomment %}
-
-
-
-
-
-
-
-{% block stylehead %}
-{% load static %}
-{% comment %} <link rel="stylesheet" href="{% static 'css/property_list.css' %}"> {% endcomment %}
-{% endblock %}
-
-{% block title %}Property List{% endblock %}
-
-{% block content %}
-<div class="container mt-5">
-    <h1 class="text-center">Property List</h1>
-    {% if user.is_authenticated %}
-    <div class="text-center">
-        <a href="{% url 'dashboard_view' %}" class="btn btn-primary">Go to Dashboard</a>
-    </div>
-    {% else %}
-    <div class="text-center">
-        <a href="{% url 'logined' %}" class="btn btn-primary">Login</a>
-        <a href="{% url 'signup' %}" class="btn btn-secondary">Sign Up</a>
-    </div>
-    {% endif %}
-    
-    <div class="row mt-4">
-        {% for property in properties %}
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <div class="card-body">
-                    <h2 class="card-title">{{ property.address }}</h2>
-                    <p><strong>Price:</strong> {{ property.price }}</p>
-                    <p><strong>City:</strong> {{ property.city.city_name }}</p>
-                    <p><strong>Town:</strong> {{ property.town.town_name }}</p>
-                    {% if property.images.all %}
-                    <img src="{{ property.images.all.0.image.url }}" alt="Property Image" class="img-fluid">
-                    {% endif %}
-                    <a href="{% url 'property_detail' property.id %}" class="btn btn-info mt-3">Show Description</a>
-                    {% if user == property.user %}
-                    <a href="{% url 'edit_property' property.id %}" class="btn btn-warning mt-3">Edit</a>
-                    <a href="{% url 'prop_delete' property.id %}" class="btn btn-danger mt-3">Delete</a>
-                    {% endif %}
-                </div>
-            </div>
+            <p><strong>No of Bedrooms: {{property.number_of_bedrooms}}</strong></p>
+            <p><strong>No of Bathrooms: {{property.number_of_bathrooms}}</strong></p>
+          </p>
+          <a href="{% url 'property_detail' property.id %}" class="btn btn-primary">Show Description</a>
+          {% if user == property.user %}
+          <div>
+          <a href="{% url 'edit_property' property.id %}" class="btn btn-warning mt-3">Edit</a>
+          <a href="{% url 'prop_delete' property.id %}" class="btn btn-danger mt-3">Delete</a></div>
+          {% endif %}
         </div>
-        {% endfor %}
-    </div>
+      </div>
+    {% endfor %}
+    {% else %}
+    <p>No properties to display</p>
+    {% endif %}
 </div>
+{% if show_dropdown %}
+<a href="{% url 'list_all_properties'%}" class='btn btn-primary'>Show More</a>
+{% endif %}
 {% endblock %}

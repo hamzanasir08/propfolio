@@ -73,30 +73,16 @@
 <body>
     <div class="container">
         <h1>Login</h1>
-        <form id="login-form">
+        <form id="login-form" method='post'>
+            {% csrf_token %}
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" required><br><br>
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required><br><br>
-            <input type="submit" value="Login">
+            <input type="submit" value="submit">
         </form>
         <p id="error-message"></p>
-        <p>Don't have an account? <a href="checkregister.html">Register now</a></p>
+        <p>Don't have an account? <a href="{% url 'signup' %}">Register now</a></p>
     </div>
-
-    <script>
-        const loginForm = document.getElementById('login-form');
-        const errorMessage = document.getElementById('error-message');
-
-        loginForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-
-            // TO DO: Add validation and authentication logic here
-            // For now, just display an error message
-            errorMessage.textContent = 'Invalid email or password';
-        });
-    </script>
 </body>
 </html>

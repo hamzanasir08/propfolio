@@ -73,15 +73,27 @@ def get_towns(request):
     towns = list(Town.objects.filter(city_id=city_id).values('townID', 'town_name'))
     return JsonResponse(towns, safe=False)
 
-# it will display all properties in db
+# it will display 9 most recent properties from db in desending order
 def property_list(request):
-    properties = Property.objects.all()
-    return render(request, 'property_list.html', {'properties': properties})
+    if request.method == 'POST':
+        filtered_cityID = request.POST.get('city')
+        properties = Property.objects.filter(city_id = filtered_cityID)
+        return render(request,'property_list.html',{'properties': properties})
+    properties = Property.objects.all().order_by('-posted_on')[:9]
+    cities = City.objects.all()
+    return render(request, 'property_list.html', {'properties': properties, 'cities': cities , 'show_dropdown': True})
 
+def list_all_properties(request):
+    properties = Property.objects.all().order_by('-posted_on')
+    return render(request, 'property_list.html', {'properties': properties})
 
 def property_detail(request, property_id):
     property = get_object_or_404(Property, pk=property_id)
     return render(request, 'property_detail.html', {'property': property})
+
+def search(request):
+    cities = City.objects.all()
+    return render(request,'search.html',{'search':True, 'cities': cities})
 
 
 # it will display properties listed by logined user
