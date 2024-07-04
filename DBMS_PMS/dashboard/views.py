@@ -1,3 +1,4 @@
+from django.utils import timezone
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Property, Image, City, Town, Appointment
 from userReg.models import CustomUser
@@ -128,9 +129,9 @@ def search(request):
         if sale_type:
             filters['sale_type'] = sale_type
         if city_id:
-            filters['cityID'] = city_id
+            filters['city_id'] = city_id
         if town_id:
-            filters['townID'] = town_id
+            filters['town_id'] = town_id
         if prop_type:
             filters['prop_type'] = prop_type
 
@@ -194,8 +195,7 @@ def edit_property(request, prop_id):
     }
     return render(request, 'edit_property.html', context)
 
-
-
+@login_required
 def book_appointment(request, property_id):
     property = get_object_or_404(Property, id=property_id)
 
@@ -210,7 +210,18 @@ def book_appointment(request, property_id):
         user = CustomUser.objects.get(id=user_id)
 
         # Parse the appointment date and time
-        appointment_datetime = datetime.strptime(appointment_date_and_time, '%Y-%m-%dT%H:%M')
+        try:
+            appointment_datetime = timezone.make_aware(datetime.strptime(appointment_date_and_time, '%Y-%m-%dT%H:%M'), timezone.get_current_timezone())
+        except ValueError:
+            messages.error(request, 'Invalid date and time format.')
+            return render(request, 'book_appointment.html', {'property': property})
+
+        # Check if the appointment date and time is in the past
+        current_time = timezone.now()
+        if appointment_datetime <= current_time:
+            messages.error(request, 'You cannot book an appointment for a past date.')
+            return render(request, 'book_appointment.html', {'property': property})
+
         start_time = appointment_datetime
         end_time = appointment_datetime + timedelta(hours=1)
 
@@ -221,7 +232,7 @@ def book_appointment(request, property_id):
 
         # No conflicts, save the appointment
         appointment = Appointment(
-            appointment_date_and_time=appointment_date_and_time,
+            appointment_date_and_time=appointment_datetime,
             visiting_user=visiting_user,
             propID=prop,
             userID=user
@@ -239,12 +250,20 @@ def appointment_success(request):
 
 @login_required
 def view_appointments(request):
+    current_time = timezone.now()
+    
     # Appointments for properties posted by the logged-in user
     properties_posted_by_user = Property.objects.filter(user=request.user)
-    appointments_for_user_properties = Appointment.objects.filter(propID__in=properties_posted_by_user)
+    appointments_for_user_properties = Appointment.objects.filter(
+        propID__in=properties_posted_by_user,
+        appointment_date_and_time__gt=current_time
+    )
 
     # Appointments booked by the logged-in user to visit other properties
-    appointments_booked_by_user = Appointment.objects.filter(visiting_user=request.user)
+    appointments_booked_by_user = Appointment.objects.filter(
+        visiting_user=request.user,
+        appointment_date_and_time__gt=current_time
+    )
 
     context = {
         'appointments_for_user_properties': appointments_for_user_properties,
@@ -254,17 +273,17 @@ def view_appointments(request):
     return render(request, 'view_appointments.html', context)
 
 
-# @login_required
-# def cancel_appointment(request, appointment_id):
-#     appointment = get_object_or_404(Appointment, id=appointment_id)
+@login_required
+def cancel_appointment(request, appointment_id):
+    appointment = get_object_or_404(Appointment, pk=appointment_id)
 
-#     # Only allow the user who booked the appointment to cancel it
-#     if appointment.visiting_user == request.user:
-#         appointment.delete()
-#         messages.success(request, 'Appointment cancelled successfully.')
-#         print('Appointment cancelled successfully.')
-#     else:
-#         messages.error(request, 'You do not have permission to cancel this appointment.')
-#         print('You do not have permission to cancel this appointment.')
+    # Only allow the user who booked the appointment to cancel it
+    if appointment.visiting_user == request.user:
+        appointment.delete()
+        messages.success(request, 'Appointment cancelled successfully.')
+        print('Appointment cancelled successfully.')
+    else:
+        messages.error(request, 'You do not have permission to cancel this appointment.')
+        print('You do not have permission to cancel this appointment.')
 
-#     return redirect('view_appointments')
+    return redirect('view_appointments')
