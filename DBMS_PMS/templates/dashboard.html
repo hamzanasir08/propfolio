@@ -1,15 +1,26 @@
+{% extends "layout.html" %}
 {% comment %} this should have the main nav bar with dashboard selected {% endcomment %}
 {% comment %} it should have another navbar after main navbar (i am naming it as dashboard navbar) which will have: My Properties, Post an add, appointments {% endcomment %}
 {% comment %} if any option from dashboard navbar is selected, it will redirect to another page but that page must have above 2 navbars. {% endcomment %}
 
-<html lang="en">
+<!-- <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-</head>
-<body>
-    <ul>
+</head> -->
+
+{% block head %}
+    <title>{% block title %}Dashboard{% endblock %}</title>
+    {% endblock %}
+    {% block stylehead %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
+    {% endblock %}
+    {% block content %}
+    
+    <!-- <ul>
         {% if user.is_authenticated %}
         <p>Welcome, {{ user.first_name }} {{ user.last_name }}!</p>
         {% endif %}
@@ -17,6 +28,31 @@
         <li><a href="{%url 'view_appointments' %}">APPOINTMENTS</a></li>
         <li><a href="{% url 'submit_property' %}">post a prop</a></li>
         <a href="{% url 'logout' %}">Logout</a>
-    </ul>
-</body>
-</html>
+    </ul> -->
+    <nav class="dashboard-navbar">
+        <div class="dashboard-menu">
+          <div class="dashboard-menu-links">
+            <ul>
+            <!-- {% if user.is_authenticated %} -->
+            <!-- <p>Welcome, {{ user.first_name }} {{ user.last_name }}!</p>
+            {% endif %} -->
+            <li><a href="{% url 'user_properties' %}">My Ads</a></li>
+            <li><a href="{%url 'view_appointments' %}">Appointment</a></li>
+            <li><a href="{% url 'submit_property' %}">Post a new Ad</a></li>
+        </ul>
+          </div>
+        </div>
+      </nav>
+<section id="dash" class="dash-text-center">
+    <div class="dash-bg-image">
+             <div class="dashboarddescription">
+            {% if user.is_authenticated %}
+                <p>Welcome, {{ user.first_name }} {{ user.last_name }}!</p>
+                {% endif %}
+            </div>
+    </div>
+    <p class="more-desc">
+        Achieve more with effective property management through Propfolio.
+    </p>
+    </section>
+    {% endblock %}

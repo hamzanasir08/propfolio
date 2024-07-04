@@ -1,0 +1,88 @@
+.dashboard-navbar {
+    height: 60px;
+    /* background-color: hsl(0, 0%,30%); */
+    background-color: rgba(194, 184, 184, 0.901);
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .dashboard-menu {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+  
+  .dashboard-menu-links {
+    display: flex;
+    gap: 24px;
+    
+    padding-inline: 31vw;
+    padding-top: 14px;
+  }
+  
+  .dashboard-menu-links a {
+    font-weight: 700;
+    font-size: 20px;
+    color: rgb(0, 0, 0, 0.5);
+    padding: 8px 16px;
+    font-family: "Ubuntu", serif;
+    text-decoration: none;
+  
+  }
+  .dashboard-menu-links a:hover {
+    color: white;
+  }
+
+  .dashboard-menu-links ul{
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+  }
+  .dashboarddescription p{
+    font-family: "Bree Serif", serif;
+    margin: 3px 104px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3.5rem;
+    color: rgba(0, 0, 0, 0.6);
+    
+
+  }
+
+.dash-bg-image {
+    position: relative;
+    min-height: calc(100vh - 60vh); /* Adjust for footer height if footer height is different */
+    /* background: url('../images/dashboard.jpg') no-repeat center center; Fix the background image */
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end; /* Align items at the bottom */
+    padding-bottom: 80px; /* Adjust the padding to move text slightly up*/
+}
+
+.dash-text-center{
+    position: relative;
+    height: 70vh;
+    background: url('../images/dash.jpg') no-repeat center center;
+    background-size: cover;
+}
+  
+  
+.more-desc {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Bree Serif", serif;
+    font-size: 2rem; /* Adjust font size */
+    color: rgba(0, 0, 0, 0.5);
+    margin-top: 20px; /* Top margin */
+    padding: 10px; /* Padding inside the element */
+    /*background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    /*border-radius: 5px; /* Rounded corners */
+    /*box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Shadow effect */
+} 
