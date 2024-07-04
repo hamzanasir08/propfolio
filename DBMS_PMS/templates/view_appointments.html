@@ -30,6 +30,7 @@
               <td>{{ appointment.propID.address }}</td>
               <td>{{ appointment.appointment_date_and_time }}</td>
               <td><a href="{% url 'property_detail' appointment.propID.id %}">View Property</a>
+              <td><a href="{% url 'cancel_appointment' appointment.appointment_ID %}">cancel appointment</a></td>
             </tr>
           {% endfor %}
         </tbody>
