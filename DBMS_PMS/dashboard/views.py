@@ -128,7 +128,7 @@ def search(request):
         if sale_type:
             filters['sale_type'] = sale_type
         if city_id:
-            filters['cityID'] = city_id
+            filters['city_id'] = city_id
         if town_id:
             filters['townID'] = town_id
         if prop_type:
