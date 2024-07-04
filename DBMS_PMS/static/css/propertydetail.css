@@ -1,0 +1,146 @@
+
+
+body {
+    
+    font-family: "Bona Nova SC", serif;
+    font-weight: 700;
+    font-style: normal;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+h1 {
+    text-align: center;
+    background-color: black;
+    color: #fff;
+    padding: 10px 0;
+    text-decoration: underline;
+}
+
+h2 {
+    color: #333;
+    text-align: center;
+    text-decoration: underline;
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(102, 98, 98, 0.868);
+    overflow-y: scroll;
+    height: 84vh;
+}
+
+.container::-webkit-scrollbar {
+    width: 6px;  /* Change the width of the scrollbar */
+}
+
+.container::-webkit-scrollbar-thumb {
+    background: #888;  /* Scrollbar thumb color */
+    border-radius: 10px;  /* Rounded corners */
+}
+.property-details {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background-color: lightgray;
+    text-align: center;
+  
+}
+
+.property-details th{
+    background-color: #434141;
+    color: white;
+}
+
+.property-details tr{
+    border: 2px dashed gray;
+   
+}
+
+/* .property-details tr:nth-child(even) {
+    background-color: #a19e9e; 
+}
+
+.property-details tr:nth-child(odd) {
+    background-color: #fff;
+}
+
+.property-details th:nth-child(even) {
+    background-color: #a19e9e; 
+}
+
+.property-details th:nth-child(odd) {
+    background-color: #fff;
+} */
+
+
+.property-details th, .property-details td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+
+.images-section {
+    text-align: center;
+}
+
+.image-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin: 10px;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.573);
+    width: 200px;
+    text-align: center;
+    height: 40vh;
+    width: 26%;
+}
+
+.card img {
+    width: 100%;
+    border-radius: 4px;
+    min-height: 190px;
+
+}
+
+a {
+    display: inline-block;
+    background-color: #28a745;
+    color: #fff;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    text-align: center;
+}
+
+a:hover {
+    background-color: #218838;
+}
+
+footer {
+    text-align: center;
+    padding: 10px 0;
+    background-color: #333;
+    color: #fff;
+    /* position: fixed; */
+    bottom: 0;
+    width: 100%;
+}
+
+.images-section h3{
+    text-decoration: underline;
+}
