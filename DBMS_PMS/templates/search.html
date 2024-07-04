@@ -1,60 +1,6 @@
 {% extends "layout.html" %}
-
-{% block content %}
-{% if search %}
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    <label for="facing">Facing:</label>
-    <select name="facing" id="facing">
-      <option value="east">East</option>
-      <option value="north">North</option>
-      <option value="west">West</option>
-      <option value="south">South</option>
-    </select>
-
-
-    <label for="Maximum_Price">Maximum Price in pkr:</label>
-    <input type="number" name="price" id="Maxprice">
-
-    <label for="bedrooms">Number of Bedrooms:</label>
-    <input type="number" name="bedrooms" id="bedrooms" >
-
-    <label for="bathrooms">Number of Bathrooms:</label>
-    <input type="number" name="bathrooms" id="bathrooms" >
-
-    <label for="sale_type">Sale Type:</label>
-    <select name="sale_type" id="sale_type">
-      <option value="rent">Rent</option>
-      <option value="sale" selected>Sale</option>
-    </select>
-
-
-
-    <label for="city">City:</label>
-    <select id="city" name="city">
-        <option value="">Select a city</option>
-        {% for city in cities %}
-            <option value="{{ city.cityID }}">{{ city.city_name }}</option>
-        {% endfor %}
-    </select>
-
-    <label for="town">Town:</label>
-    <select id="town" name="town">
-        <option value="">Select a town</option>
-    </select>
-
-
-    <button type="submit" class='btn btn-warning'>SEARCH</button>
-</form>
-
-
-{% else %}
-display results
-{% endif %}
-{% endblock content %}
-
-
 {% block scriptBlock %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
         $('#city').change(function(){
@@ -80,3 +26,64 @@ display results
     });
 </script>
 {% endblock scriptBlock %}
+
+{% block content %}
+{% if search %}
+<form method="post">
+    {% csrf_token %}
+    <label for="facing">Facing:</label>
+    <select name="facing" id="facing">
+        <option value="">Select facing</option>
+        <option value="east">East</option>
+        <option value="north">North</option>
+        <option value="west">West</option>
+        <option value="south">South</option>
+    </select>
+
+    <label for="prop_type">Property Type:</label>
+    <select name="prop_type" id="prop_type">
+        <option value="">Select facing</option>
+        <option value="Plot">Plot</option>
+        <option value="House">House</option>
+        <option value="Appartment">Appartment</option>
+    </select>
+
+    <label for="Maximum_Price">Maximum Price in pkr:</label>
+    <input type="number" name="price" id="Maxprice">
+
+    <label for="bedrooms">Number of Bedrooms:</label>
+    <input type="number" name="bedrooms" id="bedrooms" >
+
+    <label for="bathrooms">Number of Bathrooms:</label>
+    <input type="number" name="bathrooms" id="bathrooms" >
+
+    <label for="sale_type">Sale Type:</label>
+    <select name="sale_type" id="sale_type">
+      <option value="rent">Rent</option>
+      <option value="sale" selected>Sale</option>
+    </select>
+
+
+
+    <label for="city">City:</label>
+    <select id="city" name="city">
+        <option value="">Select a city</option>
+        {% for city in cities %}
+        <option value="{{ city.cityID }}">{{ city.city_name }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="town">Town:</label>
+    <select id="town" name="town">
+        <option value="">Select a town</option>
+    </select>
+
+
+    <button type="submit" class='btn btn-warning'>SEARCH</button>
+</form>
+
+
+{% else %}
+display results
+{% endif %}
+{% endblock content %}

@@ -11,20 +11,29 @@
         {% csrf_token %}
         <label for="facing">Facing:</label>
         <select name="facing" id="facing">
-          <option value="east">East</option>
-          <option value="north">North</option>
-          <option value="west" selected>West</option>
-          <option value="south">South</option>
+            <option value="">Select facing</option>
+            <option value="east">East</option>
+            <option value="north">North</option>
+            <option value="west">West</option>
+            <option value="south">South</option>
+        </select>
+        
+        <label for="prop_type">Property Type:</label>
+        <select name="prop_type" id="prop_type">
+          <option value="">Select facing</option>
+          <option value="Plot">Plot</option>
+          <option value="House">House</option>
+          <option value="Appartment">Appartment</option>
         </select>
 
         <label for="price">Price in pkr:</label>
         <input type="number" name="price" id="price" required>
 
         <label for="bedrooms">Number of Bedrooms:</label>
-        <input type="number" name="bedrooms" id="bedrooms" required>
+        <input type="number" name="bedrooms" id="bedrooms">
 
         <label for="bathrooms">Number of Bathrooms:</label>
-        <input type="number" name="bathrooms" id="bathrooms" required>
+        <input type="number" name="bathrooms" id="bathrooms">
 
         <label for="sale_type">Sale Type:</label>
         <select name="sale_type" id="sale_type">

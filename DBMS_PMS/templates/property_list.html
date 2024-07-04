@@ -7,11 +7,20 @@
         {% csrf_token %}
         <label for="city">City:</label>
         <select id="city" name="city">
-            <option value="">Select a city</option>
+            <option value="">Any city</option>
             {% for city in cities %}
                 <option value="{{ city.cityID }}">{{ city.city_name }}</option>
             {% endfor %}
         </select>
+
+        <label for="prop_type">Property Type:</label>
+        <select name="prop_type" id="prop_type">
+          <option value="">Any</option>
+          <option value="Plot">Plot</option>
+          <option value="House">House</option>
+          <option value="Appartment">Appartment</option>
+        </select>
+
         <button type="submit" class='btn btn-success'>Filter</button>
     </form>
     {% endif %}
